@@ -279,7 +279,6 @@ public class EvaluationService {
 				size = (int) Math.floor(size / 2.0);
 				position = (int) Math.ceil(position + (shrinkList.get(i)));
 			}
-
 			return position - 1;
 		}
 

@@ -18,11 +18,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String reverse(String string) {
+		//makes result
 		char[] reversed = new char[string.length()];
 		for (int i = reversed.length - 1, j = 0; i >= 0; i--, j++) {
-			reversed[j] = string.charAt(i);
+			reversed[j] = string.charAt(i); //adds chars to reversed
 		}
-		return new String(reversed);
+		return new String(reversed); //return char array as string
 	}
 
 	/**
@@ -35,21 +36,21 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		ArrayList<Character> tla = new ArrayList<Character>();
-		tla.add(phrase.charAt(0));
-		boolean acc = false;
+		tla.add(phrase.charAt(0));//add 1st letter to acronim
+		boolean acc = false;//checks if is between words
 		for (int i = 0; i < phrase.length() - 1; i++) {
 			if (Character.isLetter(phrase.charAt(i)) == false) {
-				acc = true;
+				acc = true;//if not a letter, we're between words
 			}
 			if (Character.isLetter(phrase.charAt(i)) && acc) {
-				tla.add(phrase.charAt(i));
-				acc = false;
+				tla.add(phrase.charAt(i));//add 1st letter after non-letter to result
+				acc = false;//we're at words so we're not between words
 			}
 
 		}
 		String soln = "";
 		for (char c : tla) {
-			soln += c;
+			soln += c;//convert result to string
 		}
 		return soln.toUpperCase();
 	}
@@ -146,7 +147,7 @@ public class EvaluationService {
 		int points = 0;
 		char[] input = string.toUpperCase().toCharArray();
 		for (char c : input) {
-			points += score[(int) (Character.hashCode(c) - 65)];
+			points += score[(int) (Character.hashCode(c) - 65)];//add scores
 		}
 		return points;
 	}
@@ -183,11 +184,11 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		string = string.replaceAll("[^0-9]", "");
+		string = string.replaceAll("[^0-9]", "");//remove everything except numbers
 		if (string.length() != 10) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException();//throw error if not 10 digits
 		}
-		return string;
+		return string;//return only words
 	}
 
 	/**
@@ -200,17 +201,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		string = string.replaceAll("[^0-9a-zA-Z]", " ");
+		string = string.replaceAll("[^0-9a-zA-Z]", " ");//remove everything except alphanumerics while keeping spaces
 		while (string.contains("  ")) {
-			string = string.replaceAll("  ", " ");
+			string = string.replaceAll("  ", " ");//make spaces single
 		}
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		String[] wordList = string.split(" ");
+		String[] wordList = string.split(" ");//split words by space into array
 		for (String w : wordList) {
-			if (result.containsKey(w)) {
+			if (result.containsKey(w)) {//add to count if word is already in list
 				result.put(w, result.get(w) + 1);
 			} else {
-				result.put(w, 1);
+				result.put(w, 1);//add word and 1 to map newly 
 			}
 		}
 		return result;
@@ -263,22 +264,22 @@ public class EvaluationService {
 			List<Integer> shrinkList = new ArrayList<Integer>();
 			T b = null;
 
-			for (int i = 1; Math.pow(2, i - 1) < size; i++) {
+			for (int i = 1; Math.pow(2, i - 1) < size; i++) {//create array of max move distance of pointer
 				shrinkList.add((int) (Math.ceil(size / Math.pow(2, i + 1))));
 			}
 
-			for (int i = 0; i < shrinkList.size(); i++) {
-				b = sortedList.get(position - 1);
-				if (t.compareTo(b)<=0) {
-					size = (int) Math.ceil(size / 2.0);
+			for (int i = 0; i < shrinkList.size(); i++) {//
+				b = sortedList.get(position - 1);//get object at middle of remaining list
+				if (t.compareTo(b)<=0) {//check if given is smaller than object at middle
+					size = (int) Math.ceil(size / 2.0);//recreate list to first half 
 					position = size % 2 == 1 ? (int) Math.ceil(position - (shrinkList.get(i) - 1))
-							: (int) Math.ceil(position - shrinkList.get(i));
+							: (int) Math.ceil(position - shrinkList.get(i));//get new position
 					continue;
 				}
-				size = (int) Math.floor(size / 2.0);
-				position = (int) Math.ceil(position + (shrinkList.get(i)));
+				size = (int) Math.floor(size / 2.0);//recreate list to last half 
+				position = (int) Math.ceil(position + (shrinkList.get(i)));//get new position
 			}
-			return position - 1;
+			return position - 1;//adjust human numbers to computer numbers
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -315,26 +316,26 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		String consToFirst = "";
-		String[] wordList = string.split(" ");
+		String[] wordList = string.split(" ");//separate words
 		String result = "";
 		for (String w : wordList) {
 			consToFirst = "";
-			for (int i = 0; i < w.length() - 1; i++) {
+			for (int i = 0; i < w.length() - 1; i++) {//loop through each word
 				char c = w.charAt(i);
-				if (c == 'q') {
+				if (c == 'q') {//special case for q
 					consToFirst += c;
 					consToFirst += 'u';
 					break;
 				}
 
-				if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+				if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {//end loop if vowel
 					break;
 				}
-				consToFirst += c;
+				consToFirst += c;//append first letter to end if not vowel
 			}
-			result += w.replaceFirst(Pattern.quote(consToFirst), "") + consToFirst + "ay ";
+			result += w.replaceFirst(Pattern.quote(consToFirst), "") + consToFirst + "ay ";//rearrange order and add ay
 		}
-		return result.substring(0, result.length() - 1);
+		return result.substring(0, result.length() - 1);//remove space at end
 	}
 
 	/**
@@ -356,7 +357,7 @@ public class EvaluationService {
 		int sum = 0;
 		String temp = Integer.toString(input);
 		for (int i = 0; i < temp.length(); i++) {
-			sum += Math.pow(temp.charAt(i) - '0', temp.length());
+			sum += Math.pow(temp.charAt(i) - '0', temp.length());//add each digit to the length power
 		}
 		return sum == input;
 	}
@@ -374,25 +375,24 @@ public class EvaluationService {
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		List<Long> result = new ArrayList<Long>();
 		int powerCount = 0;
-		if (primeChecker((int) l)) {
+		if (primeChecker((int) l)) {//if input is prime skip painful calculations
 			result.add(l);
 			return result;
-		}
-
-		for (int i = 2; i <= l; i++) {
-			if (primeChecker(i) && l % i == 0) {
+		}		
+		for (int i = 2; i <= l; i=i++) {
+			if (primeChecker(i) && l % i == 0) {//check if prime and prime divides
 				powerCount = 1;
-				for (int j = 1; l % Math.pow(i, j) == 0; j++) {
+				for (int j = 1; l % Math.pow(i, j) == 0; j++) {//if so, check if it applies multiple times
 					result.add((long) i);
 					powerCount = j;
 				}
-				l = (long) (l / Math.pow(i, powerCount));
+				l = (long) (l / Math.pow(i, powerCount));//reduce input to reduce amount of calculation
 			}
 		}
 		return result;
 	}
 
-	static boolean primeChecker(int n) {
+	static boolean primeChecker(int n) {//return true if input is prime
 		if (n <= 3) {
 			return true;
 		}
@@ -448,13 +448,13 @@ public class EvaluationService {
 			char[] rotated = string.toCharArray();
 			String result = "";
 			for (char c : rotated) {
-				if (Character.isLetter(c)) {
+				if (Character.isLetter(c)) {//apply reverse iff c is a letter
 					int check = (c + key);
-					if ((int) c < 91 && check > 90) {
+					if ((int) c < 91 && check > 90) {//for Upper case
 						result += (char) (check - 26);
 						continue;
 					}
-					if ((int) c < 123 && (c + key) > 122) {
+					if ((int) c < 123 && (c + key) > 122) {//for lower case
 						result += (char) (check - 26);
 						continue;
 					}
@@ -481,13 +481,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int n) {
-		if (n < 1) {
+		if (n < 1) {//kill 1
 			throw new IllegalArgumentException();
 		}
 		int ith = 0;
 		int counter = 0;
 		for (int i = 2; counter < n; i++) {
-			if (primeChecker(i)) {
+			if (primeChecker(i)) {//use prime checker above to skip re-coding
 				ith = i;
 				counter++;
 			}
@@ -532,18 +532,18 @@ public class EvaluationService {
 			char[] strAA = string.toLowerCase().toCharArray();
 			char[] invOrder = new char[26];
 			int k = 0;
-			for (char c = 'z'; c >= 'a'; c--) {
+			for (char c = 'z'; c >= 'a'; c--) {//create inverse order array
 				invOrder[k] = c;
 				k++;
 			}
 			string = "";
 			for (int i = 0; i < strAA.length; i++) {
-				if (strAA[i] >= '0' && strAA[i] <= '9') {
+				if (strAA[i] >= '0' && strAA[i] <= '9') {//skip for numbers
 					string += strAA[i];
 				} else {
-					string += invOrder[strAA[i] - 'a'];
+					string += invOrder[strAA[i] - 'a'];//invert if alphabet
 				}
-				if (i % 5 == 4 && i != strAA.length - 1) {
+				if (i % 5 == 4 && i != strAA.length - 1) {//add space every 5 words
 					string += " ";
 				}
 			}
@@ -557,7 +557,7 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			return encode(string).replaceAll("[^0-9a-zA-Z]", "");
+			return encode(string).replaceAll("[^0-9a-zA-Z]", "");//remove space and re-apply to encoder
 		}
 	}
 
@@ -587,17 +587,17 @@ public class EvaluationService {
 		int sum = 0;
 		string = string.replaceAll("[^0-9xX]", "");
 		if (string.length() != 10 || string.substring(0, 8).contains("x") || string.substring(0, 8).contains("X")) {
-			return false;
+			return false;//kill if invalid letters are included
 		}
 		char[] strAA = string.toCharArray();
 		if (strAA[9] == 'x' || strAA[9] == 'X') {
-			strAA[9] = ':';
+			strAA[9] = ':';//replace x with 10 (via ASCII)
 		}
 		for (int i = 10; i > 0; i--) {
-			sum += i * (strAA[i - 1] - '0');
+			sum += i * (strAA[i - 1] - '0');//calculate sum
 		}
 		if (sum % 11 == 0) {
-			return true;
+			return true;//check if valid
 		}
 		return false;
 	}
@@ -617,14 +617,14 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		string = string.replaceAll("[^A-za-z]", "").toLowerCase();
-		int[] checker = new int[26];
+		int[] checker = new int[26];//pangram checker array
 		char[] strAA = string.toCharArray();
 		for (char c : strAA) {
-			checker[(int) (c - 'a')] = 1;
+			checker[(int) (c - 'a')] = 1;//set checker to 1 if corresponding alphabet appears
 		}
 		for (int i : checker) {
 			if (i == 0) {
-				return false;
+				return false;//if checker is not all 1, return false
 			}
 		}
 		return true;
@@ -639,10 +639,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		if(given.isSupported(ChronoUnit.SECONDS)) {
-			return given.plus(1000000000, ChronoUnit.SECONDS);
-		}
-		return ((LocalDate) given).atStartOfDay().plus(1000000000, ChronoUnit.SECONDS);
+		return ((LocalDate) given).plus(1000000000, ChronoUnit.SECONDS);//self-explanatory 
 	}
 
 	/**
@@ -662,7 +659,7 @@ public class EvaluationService {
 		List<Integer> ints = new ArrayList<Integer>();
 		for (int i = 1; i != j; i++) {
 			for (int k : set) {
-				if (i % k == 0) {
+				if (i % k == 0) {//if either number divides i, add i to list
 					ints.add(i);
 					break;
 				}
@@ -717,19 +714,19 @@ public class EvaluationService {
 		try {
 			Integer.parseInt(string);
 		} catch (NumberFormatException e) {
-			return false;
+			return false;//kill input with invalid stuff
 		}
 		int[] fixed = new int[string.length()];
 		for (int i = 0; i < string.length(); i++) {
 			if (i % 2 == 0) {
 				fixed[i] = (int) (string.charAt(i) - '0') * 2;
-				fixed[i] = fixed[i] > 10 ? fixed[i] - 9 : fixed[i];
+				fixed[i] = fixed[i] > 10 ? fixed[i] - 9 : fixed[i];//apply changes to every other number
 				continue;
 			}
-			fixed[i] = (int) (string.charAt(i) - '0');
+			fixed[i] = (int) (string.charAt(i) - '0');//fix to int
 		}
 		for (int i : fixed) {
-			sum += i;
+			sum += i;//add up
 		}
 		return sum % 10 == 0;
 	}
@@ -769,17 +766,17 @@ public class EvaluationService {
 		char[] stringAA = string.toCharArray();
 		for (char c : stringAA) {
 			if ((Character.isDigit(c) || c == '-') && numberSwitch == 1) {
-				intAS += c;
+				intAS += c;//figures out 1st number
 			}
 			if ((Character.isDigit(c) || c == '-') && numberSwitch == 3) {
-				intBS += c;
+				intBS += c;//figures out 2nd number
 			}
 			if (Character.isLetter(c) && numberSwitch < 3 && intAS.equals("") == false) {
-				command += c;
-				numberSwitch++;
+				command += c;//create operation identifier
+				numberSwitch++;//switch from 1st to 2nd number
 			}
 		}
-		switch (command) {
+		switch (command) {//switch for operation based on identifier
 		case ("pl"):
 			return Integer.parseInt(intAS) + Integer.parseInt(intBS);
 		case ("mi"):
